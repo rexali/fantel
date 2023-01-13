@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body>
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+    <main>
+       
+            <h1 class="text-center">CONTACT: SEND MESSAGE</h1>
+
+        <form name="messageForm">
+            <input type="text" id="name" placeholder="name" />
+            <input type="email" id="email" placeholder="email" />
+            <input type="text" id="subject" placeholder="subject" />
+            <textarea id="message" placeholder="message"></textarea>
+            <input type="button" onclick="sendMessage(event)" id="submit" value="SEND" />
+        </form>
+    </main>
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+    
+    <script>
+
+        function sendMessage(evt) {
+
+            evt.preventDefault();
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var subject = document.getElementById("subject").value;
+            var message = document.getElementById("message").value;
+
+            var msgObj = {
+                name: name,
+                email: email,
+                subject: subject,
+                message: message
+            }
+
+            fetch("https://fantel.ng/messages", { method: "post", mode: "cors", body: JSON.stringify(msgObj) }).then((res) => {
+                console.log(res.json());
+            }).catch((err) => {
+                console.log(err)
+            });
+        }
+    </script>
+</body>
+
+</html>

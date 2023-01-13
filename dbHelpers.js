@@ -14,7 +14,7 @@ function connectDb() {
 
   var con = mysql.createConnection({
     host: "localhost",
-    // port:"3306",
+    port:"3306",
     user: "fantelng_fbsuser",
     password: "10fbs205?",
     database: "fantelng_fbs"
@@ -43,4 +43,8 @@ function create(sql, esc, res) {
       console.log("Record inserted");
       res.json(result);
     });
+  }
+  
+  module.exports={
+    create
   }

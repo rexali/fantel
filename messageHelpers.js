@@ -1,4 +1,4 @@
-const dbHelpers = require("dbHelpers.js")
+const dbHelpers = require("./dbHelpers.js")
 
 const sendMessage = (req, res) => {
 

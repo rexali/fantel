@@ -11,11 +11,26 @@ app.use(express.json())
 
 app.use(express.urlencoded({extended:true}));
 
-app.get("/", (req, res)=>{
+app.use("/static", express.static(path.join(__dirname,"public")));
 
- res.send("Hello World!");
+app.set("view engine", "ejs");
+
+app.get("/", (req, res)=>{
+ res.render("pages/index.ejs",{hello:"Hello World!"});
+});
+
+app.get("/contact", (req, res)=>{
+ res.render("pages/contact.ejs",{hello:"Hello World!"});
+});
+
+app.get("/apply", (req, res)=>{
+ res.render("pages/application.ejs",{hello:"Hello World!"});
 });
 
 app.post("/applications", applicationHelpers.submitApplication);
 
 app.post("/messages", messageHelpers.sendMessage);
+
+app.listen(port,()=>{
+    console.log(`Server is listening at port ${port}`);
+})
