@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Fantel</title>
+</head>
+
+<body>
+    <center><h1>SECTION A: APPLICANT'S INFORMATION</h1></center>
+    <form name="applicationForm">
+        <input type="text" id="fullname" placeholder="full name here" />
+        <input type="email" id="email" placeholder="email" />
+        <input type="text" id="address" placeholder="address" />
+        <input type="text" id="phone" placeholder="phone" />
+        <input type="text" id="course" placeholder="address" />
+        <input type="text" id="applicationNo" placeholder="applicationNo" />
+        <input type="text" id="paymentRef" placeholder="Payment ref" />
+        <input type="button" id="submit" onclick="submitApplication()" value="SUBMIT" />
+    </form>
+
+    <script>
+
+        function submitApplication() {
+
+            var fullName = document.getElementById("fullName").value;
+            var email = document.getElementById("email").value;
+            var address = document.getElementById("address").value;
+            var phone = document.getElementById("phone").value;
+            var course = document.getElementById("course").value;
+            var phone = document.getElementById("phone").value;
+            var applicationNo = document.getElementById("applicationNo").value;
+            var paymentRef = document.getElementById("paymentRef").value;
+
+            var applicationObj = {
+                fullname: fullname,
+                email: email,
+                address: address,
+                phone: phone,
+                course: course,
+                applicationNo:applicationNo,
+                paymentRef:paymentRef
+            }
+
+            fetch("https://fantelschool.ng/applications", { method: "post", mode: "cors", body: JSON.stringify(applicationObj) }).then((res) => {
+                console.log(res.json());
+            }).catch((err) => {
+                console.log(err)
+            });
+        }
+    </script>
+</body>
+
+</html>
