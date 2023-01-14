@@ -29,7 +29,6 @@ function connectDb() {
 }
 // connectedDb();
 
-
 /**
  * create insert or insert data into the database
  * @param {String} data: data to be return

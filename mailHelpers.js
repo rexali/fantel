@@ -28,10 +28,10 @@ function sendMail(email, subject, format = 'html', html, text, name) {
 
     var messageOptions = {
         envelope: {
-            from: 'aliyubello@mujaware.com',
+            from: 'support@fantelschool.ng',
             to: `${email}`
         },
-        raw: `From: aliyubello@mujaware.com
+        raw: `From: support@fantelschool.ng
         To:${email}
         Subject:${subject}
 
@@ -40,7 +40,7 @@ function sendMail(email, subject, format = 'html', html, text, name) {
 
     var mailOptions = {
         // from: `${process.env.USER}, {name:"Aliyu Bello",address:${process.env.USER}}`,
-        from: `${name ? name : "Kanimart"} <${process.env.USER}>`,
+        from: `${name ? name : "Fantel School"} <${process.env.USER}>`,
         to: email,
         subject: subject,
         [format]: html ? html : text // or html:<html>It is easy</html>

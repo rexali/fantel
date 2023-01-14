@@ -10,21 +10,31 @@
         <%- include('../partials/header'); %>
     </header>
     <main>
-       
-            <h1 class="text-center">CONTACT: SEND MESSAGE</h1>
-
+        <h1 class="text-center">CONTACT: SEND MESSAGE</h1>
         <form name="messageForm">
-            <input type="text" id="name" placeholder="name" />
-            <input type="email" id="email" placeholder="email" />
-            <input type="text" id="subject" placeholder="subject" />
-            <textarea id="message" placeholder="message"></textarea>
-            <input type="button" onclick="sendMessage(event)" id="submit" value="SEND" />
+            <div>
+                <input type="text" id="name" placeholder="name" />
+            </div>
+            <div>
+                <input type="email" id="email" placeholder="email" />
+            </div>
+            <div>
+                <input type="text" id="subject" placeholder="subject" />
+            </div>
+            <div>
+                <textarea id="message" placeholder="message"></textarea>
+            </div>
+
+            <div>
+                <span class="bg-success text-white" id="success"></span>
+                <input type="button" onclick="sendMessage(event)" id="submit" value="SEND" />
+            </div>
         </form>
     </main>
     <footer>
         <%- include('../partials/footer'); %>
     </footer>
-    
+
     <script>
 
         function sendMessage(evt) {
@@ -42,7 +52,15 @@
                 message: message
             }
 
-            fetch("https://fantel.ng/messages", { method: "post", mode: "cors", body: JSON.stringify(msgObj) }).then((res) => {
+            console.log(msgObj);
+
+            fetch("https://fantelschool.ng/messages", { method: "post", mode: "cors", body: JSON.stringify(msgObj) }).then((res) => {
+                const result =JSON.parse(res.json());
+                if (result.affectedRows === 1 && warningCount === 0) {
+                    document.getElementById("success").innerText="Success"
+                    fetch("/sendmail",{mode:"cors",method:"post",body:JSON.stringify})
+                    console.log(res.json());
+                }
                 console.log(res.json());
             }).catch((err) => {
                 console.log(err)
