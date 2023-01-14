@@ -23,6 +23,8 @@ const sendMessage = (req, res) => {
         message
     ];
 
+    console.log(req.body);
+
     dbHelpers.create(sql, esc, res);
 }  
 

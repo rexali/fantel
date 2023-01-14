@@ -12,12 +12,20 @@ var mysql = require("mysql");
 
 function connectDb() {
 
+  // var con = mysql.createConnection({
+  //   host: "localhost",
+  //   port:"3306",
+  //   user: "fantelng_fbsuser",
+  //   password: "10fbs205?",
+  //   database: "fantelng_fbs"
+  // });
+
   var con = mysql.createConnection({
     host: "localhost",
     port:"3306",
-    user: "fantelng_fbsuser",
-    password: "10fbs205?",
-    database: "fantelng_fbs"
+    user: "root",
+    password: "a1l9i7y8u",
+    database: "fanteldb"
   });
 
   con.connect(function (err) {
@@ -39,7 +47,7 @@ function connectDb() {
 function create(sql, esc, res) {
     connectDb().query(sql, esc, function (err, result, fields) {
       if (err) throw err;
-      console.log("Record inserted");
+      console.log("Record inserted..");
       res.json(result);
     });
   }

@@ -3,13 +3,17 @@ const path = require("path");
 const applicationHelpers = require("./applicationHelpers");
 const messageHelpers = require("./messageHelpers");
 const mailHelpers = require("./mailHelpers");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const app = express();
 const port = 3000;
 
-app.use(express.json())
 
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors());
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -27,7 +31,7 @@ app.get("/apply", (req, res) => {
     res.render("pages/application.ejs", { hello: "Hello World!" });
 });
 
-app.post("/applications", applicationHelpers.submitApplication);
+app.post("/applicants", applicationHelpers.submitApplication);
 
 app.post("/messages", messageHelpers.sendMessage);
 

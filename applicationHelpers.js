@@ -2,7 +2,7 @@ const dbHelpers = require("./dbHelpers")
 
 const submitApplication = (req, res) => {
 
-    let sql = `INSERT INTO applications (
+    let sql = `INSERT INTO applicants (
         fullname,
         email,
         address,
@@ -31,6 +31,7 @@ const submitApplication = (req, res) => {
         applicationNo,
         paymentRef
     ];
+    console.log(req.body);
 
     dbHelpers.create(sql, esc, res);
 }  

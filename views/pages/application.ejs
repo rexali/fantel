@@ -12,32 +12,38 @@
     <main>
         <h1 class="text-center">SECTION A: APPLICANT'S INFORMATION</h1>
         <form name="applicationForm" class="text-center">
-            <div >
+            <div>
+                <label>Full Name</label><br>
                 <input type="text" id="fullname" placeholder="full name here" />
             </div>
             <div>
+                <label>Email</label><br>
                 <input type="email" id="email" placeholder="email" />
             </div>
             <div>
+                <label>Address</label><br>
                 <input type="text" id="address" placeholder="address" />
-
             </div>
             <div>
+                <label>Phone</label><br>
                 <input type="text" id="phone" placeholder="phone" />
             </div>
             <div>
-                <input type="text" id="course" placeholder="address" />
+                <label>Course</label><br>
+                <input type="text" id="course" placeholder="course" />
             </div>
             <div>
-                <input type="text" id="applicationNo" placeholder="applicationN number" />
+                <label>Application No.</label><br>
+                <input type="text" id="applicationNo" placeholder="application number" />
             </div>
 
             <div>
+                <label>Payment Ref</label><br>
                 <input type="text" id="paymentRef" placeholder="Payment ref" />
             </div>
 
             <div>
-                <span class="bg-success text-white" id="success"></span>
+                <span class="bg-success text-white" id="success"></span><br>
                 <input class="btn btn-sm" type="button" id="submit" onclick="submitApplication(event)" value="SUBMIT" />
             </div>
 
@@ -51,6 +57,13 @@
     </footer>
 
     <script>
+
+        function sendMail(data) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("POST", "/sendmail", false);
+            xmlHttp.setRequestHeader('Content-Type', 'application/json');
+            xmlHttp.send(JSON.stringify(data));
+        }
 
         function submitApplication(event) {
             event.preventDefault();
@@ -71,18 +84,26 @@
                 applicationNo: applicationNo,
                 paymentRef: paymentRef
             }
-            console.log(applicationObj);
 
-            fetch("https://fantelschool.ng/applications", { method: "post", mode: "cors", body: JSON.stringify(applicationObj) }).then((res) => {
-                const result = SON.parse(res.json());
-                if (result.affectedRows === 1 && warningCount == 0) {
-                    document.getElementById("success").innerText="Success"
-                    fetch("/sendmail",{mode:"cors",method:"post",body:JSON.stringify})
-                    console.log(res.json());
+            function updateStatus(result) {
+                console.log(result);
+                if (result.affectedRows == 1 && result.warningCount == 0) {
+                    // sendMail(applicationObj);
+                    document.getElementById("success").innerText="Success";
+                    
                 }
-            }).catch((err) => {
-                console.log(err)
-            });
+            }
+
+            console.log(JSON.stringify(applicationObj));
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("POST", "/applicants", false);
+            xmlHttp.setRequestHeader('Content-Type', 'application/json');
+            xmlHttp.onreadystatechange=()=>{
+                if (xmlHttp.readyState===4 ) {
+                    updateStatus(JSON.parse(xmlHttp.response));
+                }
+            };
+            xmlHttp.send(JSON.stringify(applicationObj));
         }
     </script>
 </body>

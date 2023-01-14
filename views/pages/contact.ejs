@@ -26,7 +26,7 @@
             </div>
 
             <div>
-                <span class="bg-success text-white" id="success"></span>
+                <span class="bg-success text-white" id="successM"></span><br>
                 <input type="button" onclick="sendMessage(event)" id="submit" value="SEND" />
             </div>
         </form>
@@ -36,6 +36,13 @@
     </footer>
 
     <script>
+
+        function sendMail(data) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("POST", "/sendmail", false);
+            xmlHttp.setRequestHeader('Content-Type', 'application/json');
+            xmlHttp.send(JSON.stringify(data));
+        }
 
         function sendMessage(evt) {
 
@@ -52,19 +59,24 @@
                 message: message
             }
 
-            console.log(msgObj);
-
-            fetch("https://fantelschool.ng/messages", { method: "post", mode: "cors", body: JSON.stringify(msgObj) }).then((res) => {
-                const result =JSON.parse(res.json());
-                if (result.affectedRows === 1 && warningCount === 0) {
-                    document.getElementById("success").innerText="Success"
-                    fetch("/sendmail",{mode:"cors",method:"post",body:JSON.stringify})
-                    console.log(res.json());
+            function updateStatus(result) {
+                console.log(result);
+                if (result.affectedRows == 1 && result.warningCount == 0) {
+                    // sendMail(applicationObj);
+                    document.getElementById("successM").innerText = "Success";
                 }
-                console.log(res.json());
-            }).catch((err) => {
-                console.log(err)
-            });
+            }
+
+            console.log(JSON.stringify(msgObj));
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("POST", "/messages", false);
+            xmlHttp.setRequestHeader('Content-Type', 'application/json');
+            xmlHttp.onreadystatechange = () => {
+                if (xmlHttp.readyState === 4) {
+                    updateStatus(JSON.parse(xmlHttp.response));
+                }
+            };
+            xmlHttp.send(JSON.stringify(msgObj));
         }
     </script>
 </body>
